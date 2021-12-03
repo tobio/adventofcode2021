@@ -2,8 +2,8 @@ import type { Day } from './index';
 
 type CourseDirection = 'forward' | 'down' | 'up';
 interface CourseSegment {
-    direction: CourseDirection,
-    units: number
+  direction: CourseDirection,
+  units: number
 }
 
 interface Location {
@@ -17,14 +17,14 @@ function validateDirection(direction: string): direction is CourseDirection {
 }
 
 function parseInput(input: string): CourseSegment[] {
-    return input.split('\n').map(line => {
-      const [direction, units] = line.trim().split(' ');
-      if (!validateDirection(direction)) {
-        return null;
-      }
+  return input.split('\n').map(line => {
+    const [direction, units] = line.trim().split(' ');
+    if (!validateDirection(direction)) {
+      return null;
+    }
 
-      return {direction, units: Number(units)};
-    }).filter(c => c !== null);
+    return {direction, units: Number(units)};
+  }).filter(c => c !== null);
 }
 
 function basicProjection({aim, depth, horizontal}: Location, {direction, units}: CourseSegment): Location {
@@ -61,20 +61,20 @@ function day2(input: string, projection: (location: Location, segment: CourseSeg
 }
 
 const day: Day = {
-    id: 2,
-    exec: (input: string) => {
-      const part1 = day2(input, basicProjection);
-      const part2 = day2(input, projectionWithAim);
+  id: 2,
+  exec: (input: string) => {
+    const part1 = day2(input, basicProjection);
+    const part2 = day2(input, projectionWithAim);
 
-      console.log('Part 1:', part1);
-      console.log('Part 2:', part2);
-    },
-    sampleInput: `forward 5
+    console.log('Part 1:', part1);
+    console.log('Part 2:', part2);
+  },
+  sampleInput: `forward 5
 down 5
 forward 8
 up 3
 down 8
 forward 2`
-  };
+};
 
-  export default day;
+export default day;

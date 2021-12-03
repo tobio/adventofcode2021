@@ -3,10 +3,11 @@ import day2 from './day2';
 import day3 from './day3';
 
 export interface Day {
-    id: number
-    exec(input: string): void
-    sampleInput: string
+  id: number
+  exec(input: string): void
+  sampleInput: string
 }
 
-const daysById = new Map([[day1.id, day1], [day2.id, day2], [day3.id, day3]]);
+const days = [day1, day2, day3];
+const daysById = new Map(days.map(d => [d.id, d]));
 export default daysById;

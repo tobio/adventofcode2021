@@ -1,42 +1,42 @@
 import type {Day} from './index';
 
 class Bit {
-    private ones = 0
-    private zeros = 0
+  private ones = 0
+  private zeros = 0
 
-    countDigit(digit: number) {
-        if(digit) this.ones++;
-        else this.zeros++;
-    }
+  countDigit(digit: number) {
+    if(digit) this.ones++;
+    else this.zeros++;
+  }
 
-    mostSignificantDigit(): 0 | 1 {
-      return this.ones >= this.zeros ? 1 : 0;
-    }
+  mostSignificantDigit(): 0 | 1 {
+    return this.ones >= this.zeros ? 1 : 0;
+  }
 
-    lestSignificantDigit(): 0 | 1 {
-      return this.mostSignificantDigit() === 0 ? 1 : 0;
-    }
+  lestSignificantDigit(): 0 | 1 {
+    return this.mostSignificantDigit() === 0 ? 1 : 0;
+  }
 
-    calculateGamma(bitPosition: number): number {
-        if (this.mostSignificantDigit() === 0) return 0;
+  calculateGamma(bitPosition: number): number {
+    if (this.mostSignificantDigit() === 0) return 0;
 
-        return Math.pow(2, bitPosition);
-    }
+    return Math.pow(2, bitPosition);
+  }
 
-    calculateEpsilon(bitPosition: number): number {
-      if (this.lestSignificantDigit() === 0) return 0;
+  calculateEpsilon(bitPosition: number): number {
+    if (this.lestSignificantDigit() === 0) return 0;
 
-        return Math.pow(2, bitPosition);
-    }
+    return Math.pow(2, bitPosition);
+  }
 }
 
 function parseDiagnosticLine(line: string, digits: Map<number, Bit>): void {
-    Array.from(line).reverse().forEach((digit, index) => {
-        if(!digits.has(index)) {
-            digits.set(index, new Bit());
-        }
-        digits.get(index).countDigit(Number(digit));
-    })
+  Array.from(line).reverse().forEach((digit, index) => {
+    if(!digits.has(index)) {
+      digits.set(index, new Bit());
+    }
+    digits.get(index).countDigit(Number(digit));
+  });
 }
 
 function part1(lines: string[]): number {
@@ -78,17 +78,17 @@ function part2(lines: string[]): number {
 }
 
 const day: Day = {
-    id: 3,
-    exec: (input: string) => {
-      const lines = input.split('\n');
+  id: 3,
+  exec: (input: string) => {
+    const lines = input.split('\n');
 
-      const p1 = part1(lines);
-      const p2 = part2(lines);
+    const p1 = part1(lines);
+    const p2 = part2(lines);
 
-      console.log('Part 1:', p1);
-      console.log('Part 2:', p2);
-    },
-    sampleInput: `00100
+    console.log('Part 1:', p1);
+    console.log('Part 2:', p2);
+  },
+  sampleInput: `00100
 11110
 10110
 10111
@@ -100,6 +100,6 @@ const day: Day = {
 11001
 00010
 01010`
-  };
+};
 
-  export default day;
+export default day;
