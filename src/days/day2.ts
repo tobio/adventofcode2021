@@ -17,7 +17,7 @@ function validateDirection(direction: string): direction is CourseDirection {
 }
 
 function parseInput(input: string): CourseSegment[] {
-    return input.trim().split('\n').map(line => {
+    return input.split('\n').map(line => {
       const [direction, units] = line.trim().split(' ');
       if (!validateDirection(direction)) {
         return null;
