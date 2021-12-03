@@ -67,15 +67,7 @@ function findLifeSupportValue(lines: string[], bitFilter: (value: number, bit: B
     return possibleValues.length == 1;
   });
 
-  return possibleValues.map(bitsToNumber)[0] || 0;
-}
-
-function bitsToNumber(bits: string): number {
-  return Array.from(bits).map(Number).reverse().reduce((sum, bit, bitPosition) => {
-    if(bit === 0) return sum;
-
-    return sum + Math.pow(2, bitPosition);
-  }, 0);
+  return possibleValues.map(v => parseInt(v, 2))[0] || 0;
 }
 
 function part2(lines: string[]): number {
