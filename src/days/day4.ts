@@ -4,9 +4,10 @@ class Board {
   unmatchedRows: Array<Set<number>>
   unmatchedColumns: Array<Set<number>>
   isComplete: boolean
+  score: number
 
   constructor(input: string, readonly id: number) {
-    const inputRows = input.split('\n');
+    const inputRows = input.trim().split('\n');
 
     const rowItems = inputRows.map(row => row.trim().split(/\s+/).map(Number));
     this.unmatchedRows = rowItems.map(r => new Set(r));
@@ -16,32 +17,40 @@ class Board {
     });
   }
 
-  private checkNumberSet(i: number, set: Array<Set<number>>): boolean {
+  private checkNumberSet(i: number, set: Array<Set<number>>): [boolean, boolean] {
     let didWin = false
+    let didExist = false
     set.forEach(item => {
       if(item.delete(i)) {
+        didExist = true;
         if(item.size === 0) didWin = true;
       }
     });
 
-    return didWin;
+    return [didExist, didWin];
   }
 
-  numberCalled(i: number): boolean {
-    const columnsWinning = this.checkNumberSet(i, this.unmatchedColumns);
-    const rowsWinning = this.checkNumberSet(i, this.unmatchedRows);
-    this.isComplete = columnsWinning || rowsWinning;
-
-    return this.isComplete;
-  }
-
-  score(lastNumberCalled: number): number {
+  private calculateScore(lastNumberCalled: number): number {
     const unmatchedSum = this.unmatchedColumns.reduce((sum, column) =>
       sum + Array.from(column.values()).reduce((sum, current) => sum + current, 0),
       0
     );
 
     return unmatchedSum * lastNumberCalled;
+  }
+
+  numberCalled(i: number): boolean {
+    if(this.isComplete) return false;
+
+    const [exists, columnsWinning] = this.checkNumberSet(i, this.unmatchedColumns);
+    const rowsWinning = exists && this.checkNumberSet(i, this.unmatchedRows)[1];
+
+    if(!columnsWinning && !rowsWinning) return false;
+
+    this.isComplete = true;
+    this.score = this.calculateScore(i);
+
+    return this.isComplete;
   }
 }
 
@@ -62,14 +71,14 @@ function parseInput(input: string): ParsedInput {
   }
 }
 
-function scoreBoards({numbers, boards}: ParsedInput): Array<{board: Board, score: number}> {
-  const boardsByWinOrder: Array<{board: Board, score: number}> = [];
+function scoreBoards({numbers, boards}: ParsedInput): Board[] {
+  const boardsByWinOrder: Board[] = [];
   let incompleteBoards = boards;
   numbers.every(i => {
     const winningBoards = incompleteBoards.filter(board => board.numberCalled(i));
     incompleteBoards = incompleteBoards.filter(b => !b.isComplete);
 
-    winningBoards.forEach(board => boardsByWinOrder.push({board, score: board.score(i)}));
+    winningBoards.forEach(board => boardsByWinOrder.push(board));
     return !!incompleteBoards.length;
   });
 
