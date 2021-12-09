@@ -69,11 +69,11 @@ const allDigitClassifiers: DigitClassifier[] = [
 
 interface SegmentDiagnostic {
   inputs: Array<Set<string>>,
-   outputs: string[]
+  outputs: string[]
 }
 
 function parseInput(input: string): SegmentDiagnostic[] {
-  return input.trim().split('\n').map(line => {
+  return input.split('\n').map(line => {
     const [inputs, outputs] = line.split(' | ');
 
     return {

@@ -9,7 +9,7 @@ async function getInput(day: number): Promise<string> {
       cookie: `session=${sessionId};`,
     },
   });
-  return response;
+  return response.trim();
 }
 
 export { getInput };

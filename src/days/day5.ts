@@ -60,7 +60,7 @@ function parseLine(line: string): VentLine {
 }
 
 function numberOfIntersections(input: string, filter?: (v: VentLine) => boolean): number {
-  const ventLines = input.trim().split('\n').map(parseLine);
+  const ventLines = input.split('\n').map(parseLine);
   const applicableLines = filter !== undefined ? ventLines.filter(filter) : ventLines;
   const pointsMap = new Map<string, number>();
 
