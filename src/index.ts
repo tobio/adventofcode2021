@@ -16,11 +16,21 @@ if (!day) {
 }
 
 console.log('With sample input:')
+const start = Date.now();
 day.exec(day.sampleInput);
+const sampleEnd = Date.now();
 console.log();
 getInput(dayId).then(input => {
+  const actualStart = Date.now();
   console.log('With actual input');
   day.exec(input);
+  const end = Date.now();
+
+  console.log('Execution times (in ms)', {
+    sample: sampleEnd - start,
+    getInput: actualStart - sampleEnd,
+    actual: end - actualStart
+  });
 }).catch(err => {
   console.error('Failed to get input', err);
   process.exit(1);
