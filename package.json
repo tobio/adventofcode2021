@@ -1,9 +1,13 @@
 {
   "dependencies": {
+    "heap": "^0.2.7",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
-    "@types/request-promise": "^4.1.48"
+    "@types/benchmark": "^2.1.1",
+    "@types/heap": "^0.2.28",
+    "@types/request-promise": "^4.1.48",
+    "benchmark": "^2.1.4"
   }
 }
