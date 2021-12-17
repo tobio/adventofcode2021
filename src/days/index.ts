@@ -14,6 +14,7 @@ import day13 from './day13';
 import day14 from './day14';
 import day15 from './day15';
 import day16 from './day16';
+import day17 from './day17';
 
 export interface Day {
   id: number
@@ -38,6 +39,7 @@ const days = [
   day14,
   day15,
   day16,
+  day17,
 ];
 const daysById = new Map(days.map(d => [d.id, d]));
 export default daysById;
